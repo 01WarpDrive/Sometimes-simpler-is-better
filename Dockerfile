@@ -4,6 +4,12 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
+# --- 在 apt-get update 之前插入这段 ---
+# 替换为阿里云镜像源 (针对 Ubuntu 基础镜像)
+RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list && \
+    sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+# -------------------------------------
+
 RUN apt-get update \
     && apt-get install -y wget ca-certificates graphviz gnupg lsb-release maven
 
